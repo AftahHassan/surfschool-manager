@@ -41,6 +41,7 @@ class Lesson {
     public function findById($id){
         $db = Database :: getInstance();
         $stmt =$db -> query('SELECT * FROM lessons WHERE id = ?',[$id]);
+        
         return $stmt -> fetchAll(PDO :: FETCH_ASSOC);
 
     }

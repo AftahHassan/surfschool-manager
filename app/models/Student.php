@@ -33,13 +33,18 @@ public function getLevel(){
 public function findAll(){
     $db = Database :: getInstance();
     $stmt = $db -> query('SELECT * FROM students');
+    // fetchAll() retourne TOUTES les lignes sous forme de tableau
+    // ex: [ ['id'=>1,'name'=>'Ali'], ['id'=>2,'name'=>'Sara'] ]
     return $stmt -> fetchAll (PDO :: FETCH_ASSOC);
 }
 
 // trouver un student par id 
 public function findById($id){
+    // on récupère la connexion PDO
     $db   = Database::getInstance();
     $stmt = $db -> query ('SELECT * FROM students WHERE id = ?',[$id]);
+    // fetch() retourne UNE seule ligne
+    // ex: ['id'=>1, 'name'=>'Ali', 'level'=>'beginner']
     return $stmt ->fetch(PDO :: FETCH_ASSOC);
 }
 
