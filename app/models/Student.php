@@ -48,6 +48,22 @@ public function findById($id){
     return $stmt ->fetch(PDO :: FETCH_ASSOC);
 }
 
+public function findByUserId($user_id) {
+
+    // on récupère la connexion PDO
+    $db = Database::getInstance();
+
+    // on cherche l'élève dont le user_id correspond
+    $stmt = $db->query(
+        'SELECT * FROM students WHERE user_id = ?',
+        [$user_id]
+    );
+
+    // fetch() retourne UNE seule ligne
+    // ex: ['id'=>3, 'name'=>'Ali', 'level'=>'beginner', 'user_id'=>5]
+    return $stmt->fetch(PDO::FETCH_ASSOC);
+}
+
 //ici pour creer un student
 public function save ($name ,$country, $level ,$user_id){
     $db = Database::getInstance();

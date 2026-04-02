@@ -1,5 +1,5 @@
 <?php 
-require_once __DIR__ .'/../models/Users.php';
+require_once __DIR__ .'/../models/User.php';
 class AuthController{
     //propriete qui contient une instance du model user 
     private $userModel;
