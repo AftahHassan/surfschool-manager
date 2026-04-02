@@ -1,93 +1,87 @@
 <?php 
 require_once __DIR__ .'/../models/User.php';
-class AuthController{
-    //propriete qui contient une instance du model user 
+
+class AuthController {
+
     private $userModel;
 
-    public function __construct(){
-        $this -> userModel = new User();
+    public function __construct() {
+        $this->userModel = new User();
     }
 
-    //splash :la page d accueil avant le login
-
-    public function splash(){
+    // ---- SPLASH ----
+    public function splash() {
         require_once __DIR__ . '/../views/auth/splash.php';
     }
 
-    public function login(){
+    // ---- LOGIN ----
+    public function login() {
         session_start();
-             // on récupère les données du formulaire
-            // trim() supprime les espaces inutiles avant/après
-            if ($_SERVER['REQUEST_METHOD'] === 'POST'){
-                $email =trim($_POST['email']);
-                $password = trim($_POST['password']);
 
-                //si le user existe et mot de passe correct on stock les info 
-                //en session
-                if($user){
-                    $_SESSION['user_id'] =$user['id'];
-                    $_SESSION['username'] = $user['username'];
-                    $_SESSION['role']     = $user['role'];
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
-                    //redirige vers le dashboard
-                    header('Location: dashboard.php');
+            $email    = trim($_POST['email']);
+            $password = trim($_POST['password']);
 
-                }else{
-                    $error = 'Email ou mot de passe incorrect';
-                    require_once __DIR__ . '/../views/auth/login.php';
-                }
-                
-            }else{
+            // ✅ ICI on appelle le model pour vérifier les identifiants
+            // c'est cette ligne qui manquait dans votre code
+            $user = $this->userModel->login($email, $password);
+
+            if ($user) {
+                $_SESSION['user_id']  = $user['id'];
+                $_SESSION['username'] = $user['username'];
+                $_SESSION['role']     = $user['role'];
+
+                header('Location: dashboard.php');
+                exit();
+
+            } else {
+                $error = 'Email ou mot de passe incorrect';
                 require_once __DIR__ . '/../views/auth/login.php';
             }
 
-
+        } else {
+            require_once __DIR__ . '/../views/auth/login.php';
+        }
     }
 
-
-
-
-    //la partie di register 
-
-    public function register(){
+    // ---- REGISTER ----
+    public function register() {
         session_start();
 
-            if ($_SERVER['REQUEST_METHOD'] === 'POST'){
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
-                $username = trim($_POST['username']);
-                $email    = trim($_POST['email']);
-                $password = trim($_POST['password']);
-                $country  = trim($_POST['country']);
-                $level    = trim($_POST['level']);
-                
+            $username = trim($_POST['username']);
+            $email    = trim($_POST['email']);
+            $password = trim($_POST['password']);
+            $country  = trim($_POST['country']);
+            $level    = trim($_POST['level']);
 
-                if(empty($username) || empty($email) || empty($password)){
-                     $error = 'Tous les champs sont obligatoires';
-                     require_once __DIR__ . '/../views/auth/register.php';
-                     return;
-                }
-
-
-                // on appelle le model pour créer le compte user
-             $this->userModel->register($username, $email, $password);
-
-                
-                header('Location: login.php');
-                exit();
-
-
-            }else{
+            if (empty($username) || empty($email) || empty($password)) {
+                $error = 'Tous les champs sont obligatoires';
                 require_once __DIR__ . '/../views/auth/register.php';
+                return;
             }
 
+            $this->userModel->register($username, $email, $password);
+
+            header('Location: login.php');
+            exit();
+
+        } else {
+            require_once __DIR__ . '/../views/auth/register.php';
+        }
     }
 
-
-
-    public function logout(){
+    // ---- LOGOUT ----
+    public function logout() {
         session_start();
         session_destroy();
-        header('Location :login.php');
+
+        // ✅ correction ici aussi — espace avant : dans Location
+        // 'Location :login.php' ← faux
+        // 'Location: login.php' ← correct
+        header('Location: login.php');
         exit();
     }
 }

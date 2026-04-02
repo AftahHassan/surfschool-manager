@@ -32,7 +32,7 @@ class User {
     public function register($username, $email ,$password){
         $db =Database :: getInstance();
         $hash = password_hash($password,PASSWORD_BCRYPT);
-        $db ->quey('INSERT INTO users(username , email ,password ,role) VALUES(?,?,?,?)',[$username ,$email ,$hash ,'student']);
+        $db ->query('INSERT INTO users(username , email ,password ,role) VALUES(?,?,?,?)',[$username ,$email ,$hash ,'student']);
 
     }
 

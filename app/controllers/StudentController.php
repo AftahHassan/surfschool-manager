@@ -4,7 +4,7 @@ require_once __DIR__ . '/../models/Student.php';
 class StudentController{
 
     private $studentModel;
-    public functio __construct(){
+    public function __construct(){
         $this ->studentModel = new Student();
     }
     //affciher la liste de tous les eleves
