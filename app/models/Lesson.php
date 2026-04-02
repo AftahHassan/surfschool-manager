@@ -31,7 +31,7 @@ class Lesson {
 
 
     //trouver les cours 
-    public function findAdd(){
+    public function findAll(){
         $db = Database :: getInstance();
         $stmt = $db ->query('SELECT * FROM lessons ORDER BY date ASC');
         return $stmt -> fetchAll(PDO :: FETCH_ASSOC);
