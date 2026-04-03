@@ -34,35 +34,6 @@ Mot de passe : admin123
 
 ---
 
-## 🖼️ Aperçu de l'application
-
-### 🔐 Page Splash (Accueil)
-
-👉 Page d’introduction avec accès login/register
-
----
-
-### 👑 Dashboard Admin
-
-👉 Gestion complète :
-
-* étudiants
-* cours
-* inscriptions
-* paiements
-
----
-
-### 🏄 Dashboard Étudiant
-
-👉 Permet :
-
-* voir les cours
-* s’inscrire
-* suivre ses paiements
-
----
-
 ## 🔁 Fonctionnement global
 
 1. L’utilisateur accède à l’application (`index.php`)
@@ -172,7 +143,7 @@ Le fichier `database/surf_manage.sql` contient :
 ### 1️⃣ Cloner le projet
 
 ```bash
-git clone ...
+git clone git https://github.com/prog26/Prompt_Repository_.git
 ```
 
 ---
@@ -180,7 +151,7 @@ git clone ...
 ### 2️⃣ Importer la base de données
 
 * Ouvrir **phpMyAdmin**
-* Créer une base : `surfschool`
+* Créer une base : `surf_manage`
 * Importer :
 
 ```plaintext
@@ -195,7 +166,7 @@ database/surf_manage.sql
 
 ```php
 $host = 'localhost';
-$dbname = 'surfschool';
+$dbname = 'surf_manage';
 $user = 'root';
 $password = '';
 ```
