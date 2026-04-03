@@ -143,7 +143,7 @@ Le fichier `database/surf_manage.sql` contient :
 ### 1️⃣ Cloner le projet
 
 ```bash
-git clone git https://github.com/prog26/Prompt_Repository_.git
+git clone  https://github.com/prog26/Prompt_Repository_.git
 ```
 
 ---
