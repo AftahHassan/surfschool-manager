@@ -34,7 +34,7 @@ footer p:hover{
 </style>
 
 <footer>
-    <p>&copy; 2026 DevGenius Solutions — Tous droits réservés.</p>
+    <p>&copy; 2026  PixelCraft Agency Solutions — Tous droits réservés.</p>
 </footer>
 
 </body>

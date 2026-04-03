@@ -66,11 +66,16 @@ class Lesson {
     }
 
     //supprimer un cours
-    public function delete($id){
-         $db = Database::getInstance();
-         $db->query('DELETE FROM lessons WHERE id = ?', [$id]);
+    // ✅ CODE CORRIGÉ
+public function delete($id) {
+    $db = Database::getInstance();
 
-    }
+    // ÉTAPE 1 — supprimer d'abord les inscriptions liées à ce cours
+    $db->query('DELETE FROM enrollments WHERE lesson_id = ?', [$id]);
+
+    // ÉTAPE 2 — supprimer ensuite le cours
+    $db->query('DELETE FROM lessons WHERE id = ?', [$id]);
+}
 }
 
 
