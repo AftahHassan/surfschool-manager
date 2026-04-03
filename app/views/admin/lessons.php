@@ -7,6 +7,16 @@
         <div class="dashboard-title">🏄 Gestion des Cours</div>
     </div>
 
+
+    <!-- ✅ BOUTON RETOUR -->
+    <div class="admin-section">
+        <div class="admin-links">
+            <a href="dashboard.php" class="btn btn-outline">
+                ← Retour au Dashboard
+            </a>
+        </div>
+    </div>
+
     <!-- FORMULAIRE CRÉER UN COURS (US2) -->
     <div class="admin-section">
         <div class="dashboard-title">➕ Créer un cours</div>

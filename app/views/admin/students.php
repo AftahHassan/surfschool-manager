@@ -7,6 +7,15 @@
         <div class="dashboard-title">👥 Gestion des Élèves</div>
     </div>
 
+    <!-- ✅ BOUTON RETOUR -->
+    <div class="admin-section">
+        <div class="admin-links">
+            <a href="dashboard.php" class="btn btn-outline">
+                ← Retour au Dashboard
+            </a>
+        </div>
+    </div>
+
     <!-- LISTE ÉLÈVES -->
     <div class="admin-section">
         <table class="table">

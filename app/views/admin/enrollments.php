@@ -7,6 +7,15 @@
         <div class="dashboard-title">📋 Gestion des Inscriptions</div>
     </div>
 
+    <!-- ✅ BOUTON RETOUR -->
+    <div class="admin-section">
+        <div class="admin-links">
+            <a href="dashboard.php" class="btn btn-outline">
+                ← Retour au Dashboard
+            </a>
+        </div>
+    </div>
+
     <!-- FORMULAIRE INSCRIRE UN ÉLÈVE -->
     <div class="admin-section">
         <div class="dashboard-title">➕ Inscrire un élève</div>
