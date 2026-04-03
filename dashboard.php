@@ -29,14 +29,20 @@ if ($_SESSION['role'] === 'admin') {
     // on charge la vue admin
     require_once 'app/views/admin/dashboard.php';
 
-} else {
+}else {
 
-    // client voit uniquement ses propres cours
-    // on récupère le student_id lié au user connecté
-    $student     = $studentModel->findByUserId($_SESSION['user_id']);
-    $enrollments = $enrollmentModel->findByStudent($student['id']);
+    // on cherche l'élève lié au user connecté
+    $student = $studentModel->findByUserId($_SESSION['user_id']);
 
-    // on charge la vue client
+    // ✅ vérification avant d'utiliser $student
+    if (!$student) {
+        // aucun élève trouvé → tableau vide pour éviter le crash
+        $enrollments = [];
+    } else {
+        // élève trouvé → on récupère ses cours
+        $enrollments = $enrollmentModel->findByStudent($student['id']);
+    }
+
     require_once 'app/views/client/dashboard.php';
 }
 ?>

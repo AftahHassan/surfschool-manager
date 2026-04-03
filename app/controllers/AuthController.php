@@ -47,31 +47,41 @@ class AuthController {
 
     // ---- REGISTER ----
     public function register() {
-        session_start();
+    session_start();
 
-        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
-            $username = trim($_POST['username']);
-            $email    = trim($_POST['email']);
-            $password = trim($_POST['password']);
-            $country  = trim($_POST['country']);
-            $level    = trim($_POST['level']);
+        $username = trim($_POST['username']);
+        $email    = trim($_POST['email']);
+        $password = trim($_POST['password']);
+        $country  = trim($_POST['country']);
+        $level    = trim($_POST['level']);
 
-            if (empty($username) || empty($email) || empty($password)) {
-                $error = 'Tous les champs sont obligatoires';
-                require_once __DIR__ . '/../views/auth/register.php';
-                return;
-            }
-
-            $this->userModel->register($username, $email, $password);
-
-            header('Location: login.php');
-            exit();
-
-        } else {
+        if (empty($username) || empty($email) || empty($password)) {
+            $error = 'Tous les champs sont obligatoires';
             require_once __DIR__ . '/../views/auth/register.php';
+            return;
         }
+
+        // ✅ ÉTAPE 1 — insert dans users
+        $this->userModel->register($username, $email, $password);
+
+        // ✅ ÉTAPE 2 — récupère le user créé pour avoir son id
+        $user = $this->userModel->findByEmail($email);
+
+        // ✅ ÉTAPE 3 — insert dans students lié au user
+        require_once __DIR__ . '/../models/Student.php';
+        $studentModel = new Student();
+        $studentModel->save($username, $country, $level, $user['id']);
+
+        // ✅ ÉTAPE 4 — redirige vers login
+        header('Location: login.php');
+        exit();
+
+    } else {
+        require_once __DIR__ . '/../views/auth/register.php';
     }
+}
 
     // ---- LOGOUT ----
     public function logout() {

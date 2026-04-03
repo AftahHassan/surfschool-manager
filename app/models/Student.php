@@ -67,8 +67,8 @@ public function findByUserId($user_id) {
 //ici pour creer un student
 public function save ($name ,$country, $level ,$user_id){
     $db = Database::getInstance();
-    $db->query('INSER INTO student(name,country ,level,user_is) VALUES (?,?,?,?)',
-    [$name,$countryc, $level ,$user_id] );
+    $db->query('INSERT INTO students(name,country ,level,user_id) VALUES (?,?,?,?)',
+    [$name,$country, $level ,$user_id] );
 }
 
 //pour modifer le niveau 
@@ -80,9 +80,15 @@ public function updateLevel($id,$level){
 
 }
 
-public function delete($id){
-    $db = Database :: getInstance();
-    $db -> query('DELETE FROM students WHERE id= ?',[$id]);
+// ✅ CODE CORRIGÉ
+public function delete($id) {
+    $db = Database::getInstance();
+
+    // ÉTAPE 1 — supprimer d'abord les inscriptions liées à cet élève
+    $db->query('DELETE FROM enrollments WHERE student_id = ?', [$id]);
+
+    // ÉTAPE 2 — supprimer ensuite l'élève
+    $db->query('DELETE FROM students WHERE id = ?', [$id]);
 }
 
 }

@@ -56,6 +56,15 @@ class User {
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
 
+    public function findByEmail($email) {
+        $db   = Database::getInstance();
+        $stmt = $db->query(
+            'SELECT * FROM users WHERE email = ?',
+            [$email]
+        );
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+    }
+
 }
 
 
