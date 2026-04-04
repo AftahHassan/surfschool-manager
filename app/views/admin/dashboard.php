@@ -3,73 +3,128 @@
 <div class="dashboard-container">
 
     <!-- TITRE -->
-    <div class="dashboard-header">
-        <div class="dashboard-title">
-            🏄 Tableau de Bord Admin — Bonjour <?= htmlspecialchars($_SESSION['username']) ?>
+    <div class="page-header">
+        <div>
+            <h1 class="page-title">🏄 Tableau de Bord</h1>
+            <p class="page-subtitle">Bienvenue, <strong><?= htmlspecialchars($_SESSION['username']) ?></strong></p>
         </div>
     </div>
 
     <!-- STATS -->
-    <div class="stats-container">
+    <div class="stats-grid">
 
-        <div class="stat-card">
-            <div class="stat-title">Total Élèves</div>
-            <div class="stat-value"><?= count($students) ?></div>
-            <div class="progress-bar">
-                <div class="progress-fill"></div>
+        <div class="stat-card stat-blue">
+            <div class="stat-card-inner">
+                <div class="stat-icon">👥</div>
+                <div class="stat-info">
+                    <div class="stat-label">Total Élèves</div>
+                    <div class="stat-number"><?= count($students) ?></div>
+                </div>
             </div>
+            <div class="stat-bar"><div class="stat-bar-fill"></div></div>
         </div>
 
-        <div class="stat-card">
-            <div class="stat-title">Total Cours</div>
-            <div class="stat-value"><?= count($lessons) ?></div>
-            <div class="progress-bar">
-                <div class="progress-fill"></div>
+        <div class="stat-card stat-purple">
+            <div class="stat-card-inner">
+                <div class="stat-icon">🏄</div>
+                <div class="stat-info">
+                    <div class="stat-label">Total Cours</div>
+                    <div class="stat-number"><?= count($lessons) ?></div>
+                </div>
             </div>
+            <div class="stat-bar"><div class="stat-bar-fill"></div></div>
         </div>
 
-        <div class="stat-card">
-            <div class="stat-title">Total Inscriptions</div>
-            <div class="stat-value"><?= count($enrollments) ?></div>
-            <div class="progress-bar">
-                <div class="progress-fill"></div>
+        <div class="stat-card stat-green">
+            <div class="stat-card-inner">
+                <div class="stat-icon">📋</div>
+                <div class="stat-info">
+                    <div class="stat-label">Total Inscriptions</div>
+                    <div class="stat-number"><?= count($enrollments) ?></div>
+                </div>
             </div>
+            <div class="stat-bar"><div class="stat-bar-fill"></div></div>
         </div>
 
-        <div class="stat-card">
-            <div class="stat-title">Paiements en attente</div>
-            <div class="stat-value">
-                <?php
-                    // on filtre les inscriptions avec statut pending
-                    $pending = array_filter(
-                        $enrollments, 
-                        fn($e) => $e['payment_status'] === 'pending'
-                    );
-                    echo count($pending);
-                ?>
+        <div class="stat-card stat-orange">
+            <div class="stat-card-inner">
+                <div class="stat-icon">⏳</div>
+                <div class="stat-info">
+                    <div class="stat-label">Paiements en attente</div>
+                    <div class="stat-number">
+                        <?php
+                            $pending = array_filter(
+                                $enrollments,
+                                fn($e) => $e['payment_status'] === 'pending'
+                            );
+                            echo count($pending);
+                        ?>
+                    </div>
+                </div>
             </div>
-            <div class="progress-bar">
-                <div class="progress-fill"></div>
-            </div>
+            <div class="stat-bar"><div class="stat-bar-fill"></div></div>
         </div>
 
     </div>
 
     <!-- GESTION -->
-    <div class="admin-section">
-        <h3 class="admin-links">Gestion</h3>
-        <div class="admin-links">
-            <a href="students.php"    class="btn btn-category">👥 Élèves</a>
-            <a href="lessons.php"     class="btn btn-users">🏄 Cours</a>
-            <a href="enrollments.php" class="btn btn-category">📋 Inscriptions</a>
+    <div class="section-card">
+        <div class="section-card-header">
+            <h2 class="section-card-title">⚙️ Gestion</h2>
+        </div>
+        <div class="gestion-grid">
+
+            <div class="gestion-card">
+                <div class="gestion-card-icon">👥</div>
+                <div class="gestion-card-title">Élèves</div>
+                <div class="gestion-card-desc">Gérer les surfeurs inscrits</div>
+                <div class="gestion-card-actions">
+                    <a href="students.php?action=index" class="btn-action btn-primary">
+                        📋 Liste
+                    </a>
+                    <a href="students.php?action=updateLevel" class="btn-action btn-ghost">
+                        ✏️ Niveaux
+                    </a>
+                </div>
+            </div>
+
+            <div class="gestion-card">
+                <div class="gestion-card-icon">🏄</div>
+                <div class="gestion-card-title">Cours</div>
+                <div class="gestion-card-desc">Planifier les sessions de surf</div>
+                <div class="gestion-card-actions">
+                    <a href="lessons.php?action=index" class="btn-action btn-primary">
+                        📋 Liste
+                    </a>
+                    <a href="lessons.php?action=create" class="btn-action btn-ghost">
+                        ➕ Ajouter
+                    </a>
+                </div>
+            </div>
+
+            <div class="gestion-card">
+                <div class="gestion-card-icon">📋</div>
+                <div class="gestion-card-title">Inscriptions</div>
+                <div class="gestion-card-desc">Suivre les paiements</div>
+                <div class="gestion-card-actions">
+                    <a href="enrollments.php?action=index" class="btn-action btn-primary">
+                        📋 Liste
+                    </a>
+                    <a href="enrollments.php?action=enroll" class="btn-action btn-ghost">
+                        ➕ Inscrire
+                    </a>
+                </div>
+            </div>
+
         </div>
     </div>
 
     <!-- LISTE ÉLÈVES -->
-    <div class="admin-section">
-        <div class="dashboard-title">👥 Liste des Élèves</div>
-
-        <table class="table">
+    <div class="section-card">
+        <div class="section-card-header">
+            <h2 class="section-card-title">👥 Liste des Élèves</h2>
+        </div>
+        <table class="data-table">
             <thead>
                 <tr>
                     <th>Nom</th>
@@ -83,10 +138,23 @@
                 <tr>
                     <td><?= htmlspecialchars($student['name']) ?></td>
                     <td><?= htmlspecialchars($student['country']) ?></td>
-                    <td><?= htmlspecialchars($student['level']) ?></td>
                     <td>
-                        <a href="students.php?action=delete&id=<?= $student['id'] ?>" 
-                           class="btn btn-users">
+                        <?php
+                            $level = $student['level'];
+                            $badge = match($level) {
+                                'beginner'     => ['class' => 'badge-blue',   'label' => '🟢 Débutant'],
+                                'intermediate' => ['class' => 'badge-purple', 'label' => '🟡 Intermédiaire'],
+                                'advanced'     => ['class' => 'badge-green',  'label' => '🔴 Avancé'],
+                                default        => ['class' => 'badge-gray',   'label' => $level]
+                            };
+                        ?>
+                        <span class="badge <?= $badge['class'] ?>">
+                            <?= $badge['label'] ?>
+                        </span>
+                    </td>
+                    <td>
+                        <a href="students.php?action=delete&id=<?= $student['id'] ?>"
+                           class="btn-action btn-danger">
                            🗑️ Supprimer
                         </a>
                     </td>
@@ -97,10 +165,11 @@
     </div>
 
     <!-- LISTE COURS -->
-    <div class="admin-section">
-        <div class="dashboard-title">🏄 Cours à venir</div>
-
-        <table class="table">
+    <div class="section-card">
+        <div class="section-card-header">
+            <h2 class="section-card-title">🏄 Cours à venir</h2>
+        </div>
+        <table class="data-table">
             <thead>
                 <tr>
                     <th>Titre</th>
@@ -113,11 +182,11 @@
             <tbody>
                 <?php foreach ($lessons as $lesson) : ?>
                 <tr>
-                    <td><?= htmlspecialchars($lesson['title']) ?></td>
+                    <td><strong><?= htmlspecialchars($lesson['title']) ?></strong></td>
                     <td><?= htmlspecialchars($lesson['coach']) ?></td>
                     <td><?= htmlspecialchars($lesson['date']) ?></td>
                     <td><?= htmlspecialchars($lesson['level']) ?></td>
-                    <td><?= htmlspecialchars($lesson['price']) ?> MAD</td>
+                    <td><strong><?= htmlspecialchars($lesson['price']) ?> MAD</strong></td>
                 </tr>
                 <?php endforeach; ?>
             </tbody>

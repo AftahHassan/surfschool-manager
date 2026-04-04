@@ -1,82 +1,75 @@
 <?php require_once __DIR__ . '/../includes/header.php'; ?>
 
-<div class="dashboard-container">
+<div class="auth-wrapper">
 
-    <!-- TITRE -->
-    <div class="dashboard-header">
-        <div class="dashboard-title">📝 Créer un compte</div>
-    </div>
+    <div class="auth-container">
 
-    <!-- MESSAGE ERREUR -->
-    <?php if (isset($error)) : ?>
-        <div class="stat-card">
-            <div class="stat-title"><?= htmlspecialchars($error) ?></div>
-        </div>
-    <?php endif; ?>
+        <!-- TITRE -->
+        <h2>📝 Créer un compte</h2>
 
-    <!-- FORMULAIRE -->
-    <div class="admin-section">
-        <form method="POST" action="register.php">
+        <!-- MESSAGE ERREUR -->
+        <?php if (isset($error)) : ?>
+            <div class="alert-error"><?= htmlspecialchars($error) ?></div>
+        <?php endif; ?>
 
-            <div class="stat-card">
-                <div class="stat-title">Nom d'utilisateur</div>
-                <input 
-                    type="text" 
-                    name="username" 
-                    placeholder="Votre pseudo" 
+        <!-- FORMULAIRE -->
+        <form method="POST" action="/surfschool-manager/register.php">
+
+            <div class="form-group">
+                <input
+                    type="text"
+                    name="username"
+                    placeholder="Nom d'utilisateur"
                     required
                 >
             </div>
 
-            <div class="stat-card">
-                <div class="stat-title">Email</div>
-                <input 
-                    type="email" 
-                    name="email" 
-                    placeholder="votre@email.com" 
+            <div class="form-group">
+                <input
+                    type="email"
+                    name="email"
+                    placeholder="Email"
                     required
                 >
             </div>
 
-            <div class="stat-card">
-                <div class="stat-title">Mot de passe</div>
-                <input 
-                    type="password" 
-                    name="password" 
-                    placeholder="Mot de passe" 
+            <div class="form-group">
+                <input
+                    type="password"
+                    name="password"
+                    placeholder="Mot de passe"
                     required
                 >
             </div>
 
-            <div class="stat-card">
-                <div class="stat-title">Pays</div>
-                <input 
-                    type="text" 
-                    name="country" 
-                    placeholder="Maroc, France..." 
+            <div class="form-group">
+                <input
+                    type="text"
+                    name="country"
+                    placeholder="Pays (ex: Maroc)"
                     required
                 >
             </div>
 
-            <div class="stat-card">
-                <div class="stat-title">Niveau</div>
+            <div class="form-group">
                 <select name="level" required>
-                    <option value="beginner">Débutant</option>
-                    <option value="intermediate">Intermédiaire</option>
-                    <option value="advanced">Avancé</option>
+                    <option value="" disabled selected>-- Votre niveau --</option>
+                    <option value="beginner">🟢 Débutant</option>
+                    <option value="intermediate">🟡 Intermédiaire</option>
+                    <option value="advanced">🔴 Avancé</option>
                 </select>
             </div>
 
-            <div class="admin-links">
-                <button type="submit" class="btn btn-category">
-                    📝 S'inscrire
-                </button>
-                <a href="login.php" class="btn btn-users">
-                    🔐 Déjà un compte
-                </a>
-            </div>
+            <button type="submit">S'inscrire</button>
 
         </form>
+
+        <!-- LIEN CONNEXION -->
+        <p class="auth-link">
+            Déjà un compte ?
+            <a href="/surfschool-manager/login.php">Se connecter</a>
+        </p>
+
     </div>
 
 </div>

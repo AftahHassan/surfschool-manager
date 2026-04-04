@@ -2,73 +2,113 @@
 
 <div class="dashboard-container">
 
-    <!-- TITRE -->
-    <div class="dashboard-header">
-        <div class="dashboard-title">🏄 Gestion des Cours</div>
-    </div>
-
-
-    <!-- ✅ BOUTON RETOUR -->
-    <div class="admin-section">
-        <div class="admin-links">
-            <a href="dashboard.php" class="btn btn-outline">
-                ← Retour au Dashboard
-            </a>
+    <!-- TITRE + BOUTON RETOUR -->
+    <div class="page-header">
+        <div>
+            <h1 class="page-title">🏄 Gestion des Cours</h1>
+            <p class="page-subtitle">Créer et gérer les sessions de surf</p>
         </div>
+        <a href="/surfschool-manager/dashboard.php" class="btn-action btn-ghost">
+            ← Retour au Dashboard
+        </a>
     </div>
 
-    <!-- FORMULAIRE CRÉER UN COURS (US2) -->
-    <div class="admin-section">
-        <div class="dashboard-title">➕ Créer un cours</div>
+    <!-- FORMULAIRE CRÉER UN COURS -->
+    <div class="section-card">
 
-        <form method="POST" action="lessons.php?action=create">
+        <div class="section-card-header">
+            <h2 class="section-card-title">➕ Créer un cours</h2>
+        </div>
 
-            <div class="stat-card">
-                <div class="stat-title">Titre</div>
-                <input type="text" name="title" placeholder="Session débutants matin" required>
-            </div>
+        <div class="form-container">
+            <form method="POST" action="/surfschool-manager/lessons.php?action=create">
 
-            <div class="stat-card">
-                <div class="stat-title">Coach</div>
-                <input type="text" name="coach" placeholder="Nom du coach" required>
-            </div>
+                <div class="form-grid">
 
-            <div class="stat-card">
-                <div class="stat-title">Date et heure</div>
-                <input type="datetime-local" name="date" required>
-            </div>
+                    <div class="form-group">
+                        <label class="form-label">Titre</label>
+                        <input
+                            type="text"
+                            name="title"
+                            placeholder="Session débutants matin"
+                            class="form-input"
+                            required
+                        >
+                    </div>
 
-            <div class="stat-card">
-                <div class="stat-title">Prix (MAD)</div>
-                <input type="number" name="price" placeholder="150" required>
-            </div>
+                    <div class="form-group">
+                        <label class="form-label">Coach</label>
+                        <input
+                            type="text"
+                            name="coach"
+                            placeholder="Nom du coach"
+                            class="form-input"
+                            required
+                        >
+                    </div>
 
-            <div class="stat-card">
-                <div class="stat-title">Niveau</div>
-                <select name="level" required>
-                    <option value="beginner">Débutant</option>
-                    <option value="intermediate">Intermédiaire</option>
-                    <option value="advanced">Avancé</option>
-                </select>
-            </div>
+                    <div class="form-group">
+                        <label class="form-label">Date et heure</label>
+                        <input
+                            type="datetime-local"
+                            name="date"
+                            class="form-input"
+                            required
+                        >
+                    </div>
 
-            <div class="stat-card">
-                <div class="stat-title">Description</div>
-                <textarea name="description" placeholder="Description du cours..."></textarea>
-            </div>
+                    <div class="form-group">
+                        <label class="form-label">Prix (MAD)</label>
+                        <input
+                            type="number"
+                            name="price"
+                            placeholder="150"
+                            class="form-input"
+                            required
+                        >
+                    </div>
 
-            <div class="admin-links">
-                <button type="submit" class="btn btn-category">➕ Créer le cours</button>
-            </div>
+                    <div class="form-group">
+                        <label class="form-label">Niveau</label>
+                        <select name="level" class="form-input" required>
+                            <option value="" disabled selected>-- Choisir --</option>
+                            <option value="beginner">🟢 Débutant</option>
+                            <option value="intermediate">🟡 Intermédiaire</option>
+                            <option value="advanced">🔴 Avancé</option>
+                        </select>
+                    </div>
 
-        </form>
+                    <div class="form-group form-group-full">
+                        <label class="form-label">Description</label>
+                        <textarea
+                            name="description"
+                            placeholder="Description du cours..."
+                            class="form-input form-textarea"
+                        ></textarea>
+                    </div>
+
+                </div>
+
+                <div class="form-footer">
+                    <button type="submit" class="btn-action btn-primary">
+                        ➕ Créer le cours
+                    </button>
+                </div>
+
+            </form>
+        </div>
+
     </div>
 
     <!-- LISTE DES COURS -->
-    <div class="admin-section">
-        <div class="dashboard-title">📋 Liste des cours</div>
+    <div class="section-card">
 
-        <table class="table">
+        <div class="section-card-header">
+            <h2 class="section-card-title">📋 Liste des cours</h2>
+            <span class="badge badge-blue"><?= count($lessons) ?> cours</span>
+        </div>
+
+        <table class="data-table">
             <thead>
                 <tr>
                     <th>Titre</th>
@@ -82,14 +122,26 @@
             <tbody>
                 <?php foreach ($lessons as $lesson) : ?>
                 <tr>
-                    <td><?= htmlspecialchars($lesson['title']) ?></td>
+                    <td><strong><?= htmlspecialchars($lesson['title']) ?></strong></td>
                     <td><?= htmlspecialchars($lesson['coach']) ?></td>
                     <td><?= htmlspecialchars($lesson['date']) ?></td>
-                    <td><?= htmlspecialchars($lesson['level']) ?></td>
-                    <td><?= htmlspecialchars($lesson['price']) ?> MAD</td>
                     <td>
-                        <a href="lessons.php?action=delete&id=<?= $lesson['id'] ?>" 
-                           class="btn btn-users">
+                        <?php
+                            $badge = match($lesson['level']) {
+                                'beginner'     => ['class' => 'badge-blue',   'label' => '🟢 Débutant'],
+                                'intermediate' => ['class' => 'badge-purple', 'label' => '🟡 Intermédiaire'],
+                                'advanced'     => ['class' => 'badge-green',  'label' => '🔴 Avancé'],
+                                default        => ['class' => 'badge-gray',   'label' => $lesson['level']]
+                            };
+                        ?>
+                        <span class="badge <?= $badge['class'] ?>">
+                            <?= $badge['label'] ?>
+                        </span>
+                    </td>
+                    <td><strong><?= htmlspecialchars($lesson['price']) ?> MAD</strong></td>
+                    <td>
+                        <a href="/surfschool-manager/lessons.php?action=delete&id=<?= $lesson['id'] ?>"
+                           class="btn-action btn-danger">
                            🗑️ Supprimer
                         </a>
                     </td>
@@ -97,6 +149,7 @@
                 <?php endforeach; ?>
             </tbody>
         </table>
+
     </div>
 
 </div>

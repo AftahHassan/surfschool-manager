@@ -1,53 +1,49 @@
 <?php require_once __DIR__ . '/../includes/header.php'; ?>
 
-<div class="dashboard-container">
+<!-- wrapper pour centrer verticalement -->
+<div class="auth-wrapper">
 
-    <!-- TITRE -->
-    <div class="dashboard-header">
-        <div class="dashboard-title">🔐 Connexion</div>
-    </div>
+    <div class="auth-container">
 
-    <!-- MESSAGE ERREUR -->
-    <?php if (isset($error)) : ?>
-        <div class="stat-card">
-            <div class="stat-title"><?= htmlspecialchars($error) ?></div>
-        </div>
-    <?php endif; ?>
+        <!-- TITRE -->
+        <h2>🔐 Connexion</h2>
 
-    <!-- FORMULAIRE -->
-    <div class="admin-section">
-        <form method="POST" action="login.php">
+        <!-- MESSAGE ERREUR -->
+        <?php if (isset($error)) : ?>
+            <div class="alert-error"><?= htmlspecialchars($error) ?></div>
+        <?php endif; ?>
 
-            <div class="stat-card">
-                <div class="stat-title">Email</div>
-                <input 
-                    type="email" 
-                    name="email" 
-                    placeholder="votre@email.com" 
+        <!-- FORMULAIRE -->
+        <form method="POST" action="/surfschool-manager/login.php">
+
+            <div class="form-group">
+                <input
+                    type="email"
+                    name="email"
+                    placeholder="Email"
                     required
                 >
             </div>
 
-            <div class="stat-card">
-                <div class="stat-title">Mot de passe</div>
-                <input 
-                    type="password" 
-                    name="password" 
-                    placeholder="Mot de passe" 
+            <div class="form-group">
+                <input
+                    type="password"
+                    name="password"
+                    placeholder="Mot de passe"
                     required
                 >
             </div>
 
-            <div class="admin-links">
-                <button type="submit" class="btn btn-category">
-                    🔐 Se connecter
-                </button>
-                <a href="register.php" class="btn btn-users">
-                    📝 Créer un compte
-                </a>
-            </div>
+            <button type="submit">Se connecter</button>
 
         </form>
+
+        <!-- LIEN INSCRIPTION -->
+        <p class="auth-link">
+            Pas encore de compte ?
+            <a href="/surfschool-manager/register.php">S'inscrire</a>
+        </p>
+
     </div>
 
 </div>

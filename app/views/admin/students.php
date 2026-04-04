@@ -2,23 +2,26 @@
 
 <div class="dashboard-container">
 
-    <!-- TITRE -->
-    <div class="dashboard-header">
-        <div class="dashboard-title">👥 Gestion des Élèves</div>
-    </div>
-
-    <!-- ✅ BOUTON RETOUR -->
-    <div class="admin-section">
-        <div class="admin-links">
-            <a href="dashboard.php" class="btn btn-outline">
-                ← Retour au Dashboard
-            </a>
+    <!-- TITRE + BOUTON RETOUR -->
+    <div class="page-header">
+        <div>
+            <h1 class="page-title">👥 Gestion des Élèves</h1>
+            <p class="page-subtitle">Modifier les niveaux et gérer les élèves</p>
         </div>
+        <a href="/surfschool-manager/dashboard.php" class="btn-action btn-ghost">
+            ← Retour au Dashboard
+        </a>
     </div>
 
-    <!-- LISTE ÉLÈVES -->
-    <div class="admin-section">
-        <table class="table">
+    <!-- TABLEAU ÉLÈVES -->
+    <div class="section-card">
+
+        <div class="section-card-header">
+            <h2 class="section-card-title">👥 Liste des Élèves</h2>
+            <span class="badge badge-blue"><?= count($students) ?> élèves</span>
+        </div>
+
+        <table class="data-table">
             <thead>
                 <tr>
                     <th>Nom</th>
@@ -31,28 +34,48 @@
             <tbody>
                 <?php foreach ($students as $student) : ?>
                 <tr>
-                    <td><?= htmlspecialchars($student['name']) ?></td>
-                    <td><?= htmlspecialchars($student['country']) ?></td>
-                    <td><?= htmlspecialchars($student['level']) ?></td>
-
-                    <!-- FORMULAIRE MODIFIER NIVEAU (US3) -->
+                    <!-- NOM -->
                     <td>
-                        <form method="POST" action="students.php?action=updateLevel">
-                            <!-- on envoie l'id de l'élève en caché -->
+                        <strong><?= htmlspecialchars($student['name']) ?></strong>
+                    </td>
+
+                    <!-- PAYS -->
+                    <td><?= htmlspecialchars($student['country']) ?></td>
+
+                    <!-- NIVEAU ACTUEL — badge coloré -->
+                    <td>
+                        <?php
+                            $badge = match($student['level']) {
+                                'beginner'     => ['class' => 'badge-blue',   'label' => '🟢 Débutant'],
+                                'intermediate' => ['class' => 'badge-purple', 'label' => '🟡 Intermédiaire'],
+                                'advanced'     => ['class' => 'badge-green',  'label' => '🔴 Avancé'],
+                                default        => ['class' => 'badge-gray',   'label' => $student['level']]
+                            };
+                        ?>
+                        <span class="badge <?= $badge['class'] ?>">
+                            <?= $badge['label'] ?>
+                        </span>
+                    </td>
+
+                    <!-- FORMULAIRE MODIFIER NIVEAU -->
+                    <td>
+                        <form class="inline-form" method="POST" action="/surfschool-manager/students.php?action=updateLevel">
                             <input type="hidden" name="id" value="<?= $student['id'] ?>">
-                            <select name="level">
+                            <select class="table-select" name="level">
                                 <option value="beginner"     <?= $student['level'] === 'beginner'     ? 'selected' : '' ?>>Débutant</option>
                                 <option value="intermediate" <?= $student['level'] === 'intermediate' ? 'selected' : '' ?>>Intermédiaire</option>
                                 <option value="advanced"     <?= $student['level'] === 'advanced'     ? 'selected' : '' ?>>Avancé</option>
                             </select>
-                            <button type="submit" class="btn btn-category">✅ Modifier</button>
+                            <button type="submit" class="btn-action btn-primary">
+                                ✅ Modifier
+                            </button>
                         </form>
                     </td>
 
-                    <!-- BOUTON SUPPRIMER -->
+                    <!-- SUPPRIMER -->
                     <td>
-                        <a href="students.php?action=delete&id=<?= $student['id'] ?>" 
-                           class="btn btn-users">
+                        <a href="/surfschool-manager/students.php?action=delete&id=<?= $student['id'] ?>"
+                           class="btn-action btn-danger">
                            🗑️ Supprimer
                         </a>
                     </td>
@@ -60,6 +83,7 @@
                 <?php endforeach; ?>
             </tbody>
         </table>
+
     </div>
 
 </div>
