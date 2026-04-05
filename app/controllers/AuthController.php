@@ -85,13 +85,34 @@ class AuthController {
 
     // ---- LOGOUT ----
     public function logout() {
+
         session_start();
+
+        /* 🔥 Vider toutes les données session */
+        $_SESSION = [];
+
+        /* 🔥 Détruire le cookie de session */
+        if (ini_get("session.use_cookies")) {
+            $params = session_get_cookie_params();
+            setcookie(
+                session_name(),
+                '',
+                time() - 42000,
+                $params["path"],
+                $params["domain"],
+                $params["secure"],
+                $params["httponly"]
+            );
+        }
+
+        /* 🔥 Détruire la session */
         session_destroy();
 
-        // ✅ correction ici aussi — espace avant : dans Location
-        // 'Location :login.php' ← faux
-        // 'Location: login.php' ← correct
-        header('Location: login.php');
+        header("Cache-Control: no-cache, no-store, must-revalidate");
+        header("Pragma: no-cache");
+        header("Expires: 0");
+
+        header('Location: /surfschool-manager/login.php');
         exit();
     }
 }
