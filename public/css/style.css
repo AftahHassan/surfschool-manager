@@ -989,3 +989,11 @@ footer span {
     margin: 0;
 }
 
+/* ================================
+   TAB BUTTONS
+================================ */
+.tab-buttons {
+    display: flex;
+    gap: 8px;
+}
+

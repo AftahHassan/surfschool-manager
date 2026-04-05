@@ -80,11 +80,11 @@
                 <div class="gestion-card-desc">Gérer les surfeurs inscrits</div>
                 <div class="gestion-card-actions">
                     <a href="students.php?action=index" class="btn-action btn-primary">
-                        📋 Liste
+                        ✏️ ManageNiveaux
                     </a>
-                    <a href="students.php?action=updateLevel" class="btn-action btn-ghost">
+                    <!-- <a href="students.php?action=index" class="btn-action btn-ghost">
                         ✏️ Niveaux
-                    </a>
+                    </a> -->
                 </div>
             </div>
 
@@ -94,11 +94,11 @@
                 <div class="gestion-card-desc">Planifier les sessions de surf</div>
                 <div class="gestion-card-actions">
                     <a href="lessons.php?action=index" class="btn-action btn-primary">
-                        📋 Liste
+                        ✏️ ManageCourses
                     </a>
-                    <a href="lessons.php?action=create" class="btn-action btn-ghost">
-                        ➕ Ajouter
-                    </a>
+                    <!-- <a href="lessons.php?action=create" class="btn-action btn-ghost">
+                        ➕📋 Ajouter
+                    </a> -->
                 </div>
             </div>
 
@@ -108,11 +108,11 @@
                 <div class="gestion-card-desc">Suivre les paiements</div>
                 <div class="gestion-card-actions">
                     <a href="enrollments.php?action=index" class="btn-action btn-primary">
-                        📋 Liste
+                        ✏️ ManageInscriptions
                     </a>
-                    <a href="enrollments.php?action=enroll" class="btn-action btn-ghost">
+                    <!-- <a href="enrollments.php?action=enroll" class="btn-action btn-ghost">
                         ➕ Inscrire
-                    </a>
+                    </a> -->
                 </div>
             </div>
 
